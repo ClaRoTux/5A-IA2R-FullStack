@@ -15,8 +15,15 @@ public class ApiExceptionHandler {
         return pd;
     }
 
-    @ExceptionHandler(InvalidFilmException.class)
-    public ProblemDetail handleInvalid(InvalidFilmException e) {
+    @ExceptionHandler(CommentaireNotFoundException.class)
+    public ProblemDetail handleCommentNotFound(CommentaireNotFoundException e) {
+        ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+        pd.setTitle("Comment not found");
+        return pd;
+    }
+
+    @ExceptionHandler({ InvalidFilmException.class, InvalidCommentException.class })
+    public ProblemDetail handleInvalid(RuntimeException e) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
         pd.setTitle("Invalid request");
         return pd;

@@ -14,4 +14,12 @@ public interface FilmStore {
     Film modifyFilm(long id, Film f);
 
     void deleteFilm(long id);
+
+    List<FilmCommentaire> getFilmCommentsbyID(Long id);
+
+    FilmCommentaire addComments(long id, FilmCommentaire comment);
+
+    FilmCommentaire modifyComment(Long id, FilmCommentaire c);
+
+    void deleteComment(Long id);
 }

@@ -10,6 +10,7 @@ public class FilmDataBase implements FilmStore {
 
     private List<Film> films = new ArrayList<>();
     private long lastId = 0;
+    private long lastCommentId = 0;
 
     @Override
     public Film create(Film f) {
@@ -59,5 +60,49 @@ public class FilmDataBase implements FilmStore {
     @Override
     public void deleteFilm(long id) {
         films.remove(getFilmbyId(id));
+    }
+
+    @Override
+    public List<FilmCommentaire> getFilmCommentsbyID(Long id) {
+        return List.copyOf(getFilmbyId(id).getCommentaires());
+    }
+
+    @Override
+    public FilmCommentaire addComments(long id, FilmCommentaire comment) {
+        Film f = getFilmbyId(id);
+        comment.setId(++lastCommentId);
+        f.getCommentaires().add(comment);
+        return comment;
+    }
+
+    @Override
+    public FilmCommentaire modifyComment(Long id, FilmCommentaire c) {
+        FilmCommentaire comment = getCommentbyId(id);
+        comment.setMessage(c.getMessage());
+        return comment;
+    }
+
+    private FilmCommentaire getCommentbyId(long id) {
+        for (Film f : films) {
+            for (FilmCommentaire c : f.getCommentaires()) {
+                if (c.getId() == id) {
+                    return c;
+                }
+            }
+        }
+        throw new CommentaireNotFoundException(id);
+    }
+
+    @Override
+    public void deleteComment(Long id) {
+        for (Film f : films) {
+            for (FilmCommentaire c : f.getCommentaires()) {
+                if (c.getId() == id) {
+                    f.getCommentaires().remove(c);
+                    return;
+                }
+            }
+        }
+        throw new CommentaireNotFoundException(id);
     }
 }

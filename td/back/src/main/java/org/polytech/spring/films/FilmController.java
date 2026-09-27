@@ -38,10 +38,24 @@ public class FilmController {
         return filmService.getFilmbyId(id);
     }
 
+    @GetMapping("/{id}/commentaires")
+    public List<FilmCommentaire> getFilmCommentsbyID(@PathVariable("id") Long id) {
+        return filmService.getFilmCommentsbyID(id);
+    }
+
     @PostMapping
     public ResponseEntity<Film> addFilm(@RequestBody Film f) {
         Film saved = filmService.create(f);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saved.getId()).toUri();
+        return ResponseEntity.created(uri).body(saved);
+    }
+
+    @PostMapping("/{id}/commentaires")
+    public ResponseEntity<FilmCommentaire> addComments(@PathVariable("id") Long id,
+            @RequestBody FilmCommentaire comment) {
+        FilmCommentaire saved = filmService.addComments(id, comment);
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/commentaires/{id}")
+                .buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(uri).body(saved);
     }
 
@@ -55,5 +69,4 @@ public class FilmController {
         filmService.deleteFilm(id);
         return ResponseEntity.noContent().build();
     }
-
 }

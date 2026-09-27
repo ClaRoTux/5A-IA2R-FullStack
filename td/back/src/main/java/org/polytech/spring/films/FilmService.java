@@ -1,5 +1,6 @@
 package org.polytech.spring.films;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -60,6 +61,36 @@ public class FilmService {
         if (!errors.isEmpty()) {
             throw new InvalidFilmException("Missing fields: " + String.join(", ", errors));
         }
+    }
+
+    public void validateComment(FilmCommentaire comment) {
+        List<String> errors = new ArrayList<>();
+        if (comment.getAuteur() == null || comment.getAuteur().isBlank())
+            errors.add("auteur");
+        if (comment.getMessage() == null || comment.getMessage().isBlank())
+            errors.add("message");
+        if (!errors.isEmpty())
+            throw new InvalidCommentException("Missing fields: " + String.join(", ", errors));
+    }
+
+    public List<FilmCommentaire> getFilmCommentsbyID(Long id) {
+        return store.getFilmCommentsbyID(id);
+    }
+
+    public FilmCommentaire addComments(long id, FilmCommentaire comment) {
+        validateComment(comment);
+        comment.setDate(LocalDate.now());
+        return store.addComments(id, comment);
+    }
+
+    public FilmCommentaire modifyComment(Long id, FilmCommentaire c) {
+        if (c.getMessage() == null || c.getMessage().isBlank())
+            throw new InvalidCommentException("Missing fields: message");
+        return store.modifyComment(id, c);
+    }
+
+    public void deleteComment(Long id) {
+        store.deleteComment(id);
     }
 
 }

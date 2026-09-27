@@ -1,6 +1,10 @@
 package org.polytech.spring.films;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Film {
     private long id;
@@ -8,6 +12,8 @@ public class Film {
     private String realisateur;
     private LocalDate dateSortie;
     private Genre genre;
+    @JsonIgnore
+    private List<FilmCommentaire> commentaires = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -27,6 +33,10 @@ public class Film {
 
     public Genre getGenre() {
         return genre;
+    }
+
+    public List<FilmCommentaire> getCommentaires() {
+        return commentaires;
     }
 
     public void setId(long id) {
