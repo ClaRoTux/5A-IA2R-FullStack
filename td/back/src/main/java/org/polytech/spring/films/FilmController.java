@@ -23,7 +23,7 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Film> getFilms() {
         return filmService.getFilms();
     }
@@ -33,7 +33,7 @@ public class FilmController {
         return filmService.getFilmbyId(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<Film> addFilm(@RequestBody Film f) {
         Film saved = filmService.create(f);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saved.getId()).toUri();
