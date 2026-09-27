@@ -7,6 +7,8 @@ public interface FilmStore {
 
     List<Film> getFilms();
 
+    List<Film> searchFilms(String realisateur, Genre genre);
+
     Film getFilmbyId(long id);
 
     Film modifyFilm(long id, Film f);

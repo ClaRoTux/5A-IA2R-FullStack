@@ -18,8 +18,8 @@ public class FilmService {
         return store.create(f);
     }
 
-    public List<Film> getFilms() {
-        return store.getFilms();
+    public List<Film> getFilms(String realisateur, Genre genre) {
+        return store.searchFilms(realisateur, genre);
     }
 
     public Film getFilmbyId(long id) {

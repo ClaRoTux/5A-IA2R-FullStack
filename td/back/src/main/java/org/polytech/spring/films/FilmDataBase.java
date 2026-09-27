@@ -28,6 +28,15 @@ public class FilmDataBase implements FilmStore {
     }
 
     @Override
+    public List<Film> searchFilms(String realisateur, Genre genre) {
+        return films.stream()
+                .filter(f -> realisateur == null || realisateur.isBlank()
+                        || f.getRealisateur().toLowerCase().contains(realisateur.toLowerCase()))
+                .filter(f -> genre == null || f.getGenre() == genre)
+                .toList();
+    }
+
+    @Override
     public Film getFilmbyId(long id) {
         for (int i = 0; i < films.size(); i++) {
             if (films.get(i).getId() == id) {

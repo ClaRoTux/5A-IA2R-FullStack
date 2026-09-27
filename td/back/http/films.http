@@ -42,3 +42,19 @@ DELETE http://localhost:8080/films/1
 ### Identifiant inconnu — réponse attendue : 404 au format ProblemDetail
 GET http://localhost:8080/films/9999
 Accept: application/json
+
+### Recherche par genre
+GET http://localhost:8080/films?genre=SCIENCE_FICTION
+Accept: application/json
+
+### Recherche combinée
+GET http://localhost:8080/films?realisateur=scott&genre=SCIENCE_FICTION
+Accept: application/json
+
+### Aucun résultat — réponse attendue : 200 avec []
+GET http://localhost:8080/films?realisateur=Nolan
+Accept: application/json
+
+### Genre invalide — réponse attendue : 400 au format ProblemDetail
+GET http://localhost:8080/films?genre=XYZ
+Accept: application/json
