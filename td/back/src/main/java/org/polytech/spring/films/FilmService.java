@@ -1,13 +1,21 @@
 package org.polytech.spring.films;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class FilmService {
     private final FilmStore store;
+    private final Map<String, Comparator<Film>> tris = Map.of(
+            "id", Comparator.comparing(Film::getId),
+            "titre", Comparator.comparing(Film::getTitre),
+            "realisateur", Comparator.comparing(Film::getRealisateur),
+            "dateSortie", Comparator.comparing(Film::getDateSortie),
+            "genre", Comparator.comparing(Film::getGenre));
 
     public FilmService(FilmStore filmStore) {
         this.store = filmStore;
@@ -18,8 +26,12 @@ public class FilmService {
         return store.create(f);
     }
 
-    public List<Film> getFilms(String realisateur, Genre genre) {
-        return store.searchFilms(realisateur, genre);
+    public List<Film> getFilms(String realisateur, Genre genre, long page, long size, String sort) {
+        Comparator<Film> comparator = tris.get(sort);
+        if (page < 0 || size < 1 || size > 100 || comparator == null) {
+            throw new InvalidFilmException("Invalid pagination parameters");
+        }
+        return store.searchFilms(realisateur, genre).stream().sorted(comparator).skip(page * size).limit(size).toList();
     }
 
     public Film getFilmbyId(long id) {

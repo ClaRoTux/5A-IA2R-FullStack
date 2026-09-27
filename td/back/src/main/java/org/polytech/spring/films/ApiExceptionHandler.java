@@ -18,7 +18,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler(InvalidFilmException.class)
     public ProblemDetail handleInvalid(InvalidFilmException e) {
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
-        pd.setTitle("Invalid film");
+        pd.setTitle("Invalid request");
         return pd;
     }
 

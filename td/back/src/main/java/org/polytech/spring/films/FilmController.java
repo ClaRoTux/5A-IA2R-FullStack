@@ -26,8 +26,11 @@ public class FilmController {
 
     @GetMapping
     public List<Film> getFilms(@RequestParam(name = "realisateur", required = false) String realisateur,
-            @RequestParam(name = "genre", required = false) Genre genre) {
-        return filmService.getFilms(realisateur, genre);
+            @RequestParam(name = "genre", required = false) Genre genre,
+            @RequestParam(name = "page", required = false, defaultValue = "0") Long page,
+            @RequestParam(name = "size", required = false, defaultValue = "20") Long size,
+            @RequestParam(name = "sort", required = false, defaultValue = "id") String sort) {
+        return filmService.getFilms(realisateur, genre, page, size, sort);
     }
 
     @GetMapping("/{id}")
