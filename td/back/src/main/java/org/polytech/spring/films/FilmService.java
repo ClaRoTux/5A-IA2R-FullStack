@@ -27,6 +27,7 @@ public class FilmService {
     }
 
     public Film modifyFilm(long id, Film f) {
+        validateFilm(f);
         return store.modifyFilm(id, f);
     }
 

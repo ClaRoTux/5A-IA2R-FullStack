@@ -2,22 +2,11 @@ package org.polytech.spring.films;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 public class Film {
     private long id;
-
-    @NotBlank
     private String titre;
-
-    @NotBlank
     private String realisateur;
-
-    @NotNull
     private LocalDate dateSortie;
-
-    @NotNull
     private Genre genre;
 
     public long getId() {
