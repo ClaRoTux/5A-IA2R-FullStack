@@ -1,6 +1,5 @@
 package org.polytech.spring;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +10,6 @@ import jakarta.annotation.PreDestroy;
 @Primary
 public class PatientDataBase implements PatientStore {
 
-    @Value("${database.url}")
     private String urlDB;
 
     @Override
@@ -22,7 +20,6 @@ public class PatientDataBase implements PatientStore {
     @PostConstruct
     public void init() {
         System.out.println("ouverture connexion");
-        System.out.println("url database : " + urlDB);
     }
 
     @PreDestroy

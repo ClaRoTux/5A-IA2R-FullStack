@@ -14,4 +14,9 @@ public class PatientService {
     public void savePatient(Patient p) {
         store.savePatient(p);
     }
+
+    public void findAll() {
+
+    }
+
 }
