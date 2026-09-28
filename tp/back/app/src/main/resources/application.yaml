@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/covid-db
+    username: postgres
+    password: password
+  jpa:
+    hibernate:
+      # create-drop : le schéma est recréé à chaque démarrage. Adapté au
+      # développement. En production, le schéma est géré par un outil de
+      # migration versionné — Flyway ou Liquibase — et non par ddl-auto.
+      ddl-auto: create-drop
+    show-sql: true
+    # false : la session Hibernate est fermée dès la sortie du service.
+    # Laisser open-in-view actif, valeur par défaut de Spring Boot, supprimerait
+    # la LazyInitializationException, au prix de requêtes SQL déclenchées par le
+    # sérialiseur, hors de tout contrôle. C'est la moins bonne des trois
+    # solutions apparentes examinées dans ce chapitre.
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    # requis : sans cette propriété, data.sql s'exécute avant la création des tables
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  mvc:
+    # Héritée de la branche 06 : sans elle, une exception résolue par un
+    # @RestControllerAdvice ne laisse aucune trace au-dessus de DEBUG.
+    # Toujours utile ici, le contrôleur de démonstration actif sous profil
+    # « demo » reproduisant la même panne sur /demo/patients.
+    log-resolved-exception: true
+
+# Origines autorisées à appeler l'API depuis un navigateur.
+# Le front Angular de la séance suivante écoute sur le port 4200.
+app:
+  cors:
+    allowed-origins: http://localhost:4200
