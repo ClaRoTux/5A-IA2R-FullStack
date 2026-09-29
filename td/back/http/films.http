@@ -58,3 +58,446 @@ Accept: application/json
 ### Genre invalide — réponse attendue : 400 au format ProblemDetail
 GET http://localhost:8080/films?genre=XYZ
 Accept: application/json
+
+### Jeu de données 1/5
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{
+  "titre": "Zodiac",
+  "realisateur": "David Fincher",
+  "dateSortie": "2007-03-02",
+  "genre": "THRILLER"
+}
+
+### Jeu de données 2/5
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{
+  "titre": "Alien",
+  "realisateur": "Ridley Scott",
+  "dateSortie": "1979-05-25",
+  "genre": "SCIENCE_FICTION"
+}
+
+### Jeu de données 3/5
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{
+  "titre": "Inception",
+  "realisateur": "Christopher Nolan",
+  "dateSortie": "2010-07-16",
+  "genre": "SCIENCE_FICTION"
+}
+
+### Jeu de données 4/5
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{
+  "titre": "Heat",
+  "realisateur": "Michael Mann",
+  "dateSortie": "1995-12-15",
+  "genre": "POLICIER"
+}
+
+### Jeu de données 5/5
+POST http://localhost:8080/films
+Content-Type: application/json
+
+{
+  "titre": "Blade Runner",
+  "realisateur": "Ridley Scott",
+  "dateSortie": "1982-06-25",
+  "genre": "SCIENCE_FICTION"
+}
+
+### Valeurs par défaut
+GET http://localhost:8080/films
+Accept: application/json
+
+### Paramètres explicites
+GET http://localhost:8080/films?page=0&size=20&sort=id
+Accept: application/json
+
+### Tri par titre, page 0
+GET http://localhost:8080/films?page=0&size=2&sort=titre
+Accept: application/json
+
+### Tri par titre, page 1
+GET http://localhost:8080/films?page=1&size=2&sort=titre
+Accept: application/json
+
+### Tri par titre, dernière page incomplète
+GET http://localhost:8080/films?page=2&size=2&sort=titre
+Accept: application/json
+
+### Page au-delà de la fin
+GET http://localhost:8080/films?page=3&size=2&sort=titre
+Accept: application/json
+
+### Tri décroissant
+GET http://localhost:8080/films?page=0&size=2&sort=titre,desc
+Accept: application/json
+
+### Tri par date de sortie
+GET http://localhost:8080/films?sort=dateSortie
+Accept: application/json
+
+### Tri par date décroissante
+GET http://localhost:8080/films?sort=dateSortie,desc
+Accept: application/json
+
+### Recherche + tri
+GET http://localhost:8080/films?realisateur=scott&sort=dateSortie
+Accept: application/json
+
+### Recherche + pagination
+GET http://localhost:8080/films?genre=SCIENCE_FICTION&page=0&size=2&sort=titre
+Accept: application/json
+
+### Recherche + pagination, page 1
+GET http://localhost:8080/films?genre=SCIENCE_FICTION&page=1&size=2&sort=titre
+Accept: application/json
+
+### Page négative
+GET http://localhost:8080/films?page=-1
+Accept: application/json
+
+### Taille nulle
+GET http://localhost:8080/films?size=0
+Accept: application/json
+
+### Taille trop grande
+GET http://localhost:8080/films?size=500
+Accept: application/json
+
+### Page non numérique
+GET http://localhost:8080/films?page=abc
+Accept: application/json
+
+### Champ de tri inconnu
+GET http://localhost:8080/films?sort=budget
+Accept: application/json
+
+### Direction de tri invalide
+GET http://localhost:8080/films?sort=titre,up
+Accept: application/json
+
+### Film sans commentaire
+GET http://localhost:8080/films/2/commentaires
+Accept: application/json
+
+### Ajout commentaire 1 sur Alien
+POST http://localhost:8080/films/2/commentaires
+Content-Type: application/json
+
+{
+  "auteur": "Alice",
+  "message": "Chef-d'œuvre de la science-fiction horrifique."
+}
+
+### Ajout commentaire 2 sur Alien
+POST http://localhost:8080/films/2/commentaires
+Content-Type: application/json
+
+{
+  "auteur": "Bob",
+  "message": "Sigourney Weaver impressionnante."
+}
+
+### Ajout commentaire 3 sur Inception
+POST http://localhost:8080/films/3/commentaires
+Content-Type: application/json
+
+{
+  "auteur": "Alice",
+  "message": "Scénario à tiroirs, il faut le voir deux fois."
+}
+
+### Date envoyée par le client
+POST http://localhost:8080/films/3/commentaires
+Content-Type: application/json
+
+{
+  "auteur": "Charlie",
+  "date": "2000-01-01T00:00:00",
+  "message": "La toupie tombe ou pas ?"
+}
+
+### Commentaires d'Alien
+GET http://localhost:8080/films/2/commentaires
+Accept: application/json
+
+### Commentaires d'Inception
+GET http://localhost:8080/films/3/commentaires
+Accept: application/json
+
+### Film seul
+GET http://localhost:8080/films/2
+Accept: application/json
+
+### Modification commentaire 1
+PUT http://localhost:8080/commentaires/1
+Content-Type: application/json
+
+{
+  "message": "Chef-d'œuvre absolu, revu hier soir."
+}
+
+### Suppression commentaire 2
+DELETE http://localhost:8080/commentaires/2
+
+### Commentaires d'Alien après suppression
+GET http://localhost:8080/films/2/commentaires
+Accept: application/json
+
+### Commentaire déjà supprimé
+DELETE http://localhost:8080/commentaires/2
+
+### Liste sur film inconnu
+GET http://localhost:8080/films/9999/commentaires
+Accept: application/json
+
+### Ajout sur film inconnu
+POST http://localhost:8080/films/9999/commentaires
+Content-Type: application/json
+
+{
+  "auteur": "Alice",
+  "message": "Ce film n'existe pas."
+}
+
+### Ajout sans auteur
+POST http://localhost:8080/films/2/commentaires
+Content-Type: application/json
+
+{
+  "message": "Anonyme"
+}
+
+### Ajout avec message vide
+POST http://localhost:8080/films/2/commentaires
+Content-Type: application/json
+
+{
+  "auteur": "Alice",
+  "message": "   "
+}
+
+### Id de film non numérique
+GET http://localhost:8080/films/abc/commentaires
+Accept: application/json
+
+### Modification commentaire inconnu
+PUT http://localhost:8080/commentaires/9999
+Content-Type: application/json
+
+{
+  "message": "Introuvable"
+}
+
+### Modification avec message vide
+PUT http://localhost:8080/commentaires/1
+Content-Type: application/json
+
+{
+  "message": ""
+}
+
+### Suppression commentaire inconnu
+DELETE http://localhost:8080/commentaires/9999
+
+### Suppression en cascade : supprimer Inception
+DELETE http://localhost:8080/films/3
+
+### Commentaire d'un film supprimé
+PUT http://localhost:8080/commentaires/3
+Content-Type: application/json
+
+{
+  "message": "Orphelin ?"
+}
+
+### Liste sur film supprimé
+GET http://localhost:8080/films/3/commentaires
+Accept: application/json
+
+### Aucun acteur
+GET http://localhost:8080/acteurs
+Accept: application/json
+
+### Création acteur 1
+POST http://localhost:8080/acteurs
+Content-Type: application/json
+
+{
+  "firstname": "Sigourney",
+  "name": "Weaver"
+}
+
+### Création acteur 2
+POST http://localhost:8080/acteurs
+Content-Type: application/json
+
+{
+  "firstname": "Harrison",
+  "name": "Ford"
+}
+
+### Création acteur 3
+POST http://localhost:8080/acteurs
+Content-Type: application/json
+
+{
+  "firstname": "Leonardo",
+  "name": "DiCaprio"
+}
+
+### Création acteur 4 (faute de frappe volontaire)
+POST http://localhost:8080/acteurs
+Content-Type: application/json
+
+{
+  "firstname": "Rutger",
+  "name": "Haueur"
+}
+
+### Création invalide
+POST http://localhost:8080/acteurs
+Content-Type: application/json
+
+{
+  "firstname": "Sans nom"
+}
+
+### Mise à jour acteur 4
+PUT http://localhost:8080/acteurs/4
+Content-Type: application/json
+
+{
+  "firstname": "Rutger",
+  "name": "Hauer"
+}
+
+### Mise à jour acteur inconnu
+PUT http://localhost:8080/acteurs/9999
+Content-Type: application/json
+
+{
+  "firstname": "Personne",
+  "name": "Inconnu"
+}
+
+### Liste des acteurs
+GET http://localhost:8080/acteurs
+Accept: application/json
+
+### Acteur inconnu
+GET http://localhost:8080/acteurs/9999
+Accept: application/json
+
+### Association Weaver → Alien
+POST http://localhost:8080/films/2/acteurs/1
+Content-Type: application/json
+
+{
+  "personnage": "Ellen Ripley"
+}
+
+### Association Ford → Blade Runner
+POST http://localhost:8080/films/5/acteurs/2
+Content-Type: application/json
+
+{
+  "personnage": "Rick"
+}
+
+### Association Hauer → Blade Runner
+POST http://localhost:8080/films/5/acteurs/4
+Content-Type: application/json
+
+{
+  "personnage": "Roy Batty"
+}
+
+### Association DiCaprio → Inception
+POST http://localhost:8080/films/3/acteurs/3
+Content-Type: application/json
+
+{
+  "personnage": "Dom Cobb"
+}
+
+### Ré-association Ford → Blade Runner
+POST http://localhost:8080/films/5/acteurs/2
+Content-Type: application/json
+
+{
+  "personnage": "Rick Deckard"
+}
+
+### Association sans corps (Weaver → Blade Runner)
+POST http://localhost:8080/films/5/acteurs/1
+
+### Détail Blade Runner
+GET http://localhost:8080/films/5
+Accept: application/json
+
+### Acteurs de Blade Runner
+GET http://localhost:8080/films/5/acteurs
+Accept: application/json
+
+### Films de Weaver
+GET http://localhost:8080/acteurs/1/films
+Accept: application/json
+
+### Détail Weaver
+GET http://localhost:8080/acteurs/1
+Accept: application/json
+
+### Dissociation Weaver ↔ Blade Runner
+DELETE http://localhost:8080/films/5/acteurs/1
+
+### Dissociation répétée
+DELETE http://localhost:8080/films/5/acteurs/1
+
+### Films de Weaver après dissociation
+GET http://localhost:8080/acteurs/1/films
+Accept: application/json
+
+### Association sur film inconnu
+POST http://localhost:8080/films/9999/acteurs/1
+
+### Association avec acteur inconnu
+POST http://localhost:8080/films/2/acteurs/9999
+
+### Dissociation avec acteur inconnu
+DELETE http://localhost:8080/films/2/acteurs/9999
+
+### Acteurs d'un film inconnu
+GET http://localhost:8080/films/9999/acteurs
+Accept: application/json
+
+### Films d'un acteur inconnu
+GET http://localhost:8080/acteurs/9999/films
+Accept: application/json
+
+### Suppression Hauer
+DELETE http://localhost:8080/acteurs/4
+
+### Blade Runner après suppression de Hauer
+GET http://localhost:8080/films/5
+Accept: application/json
+
+### Suppression acteur inconnu
+DELETE http://localhost:8080/acteurs/9999
+
+### Suppression Inception
+DELETE http://localhost:8080/films/3
+
+### DiCaprio après suppression d'Inception
+GET http://localhost:8080/acteurs/3
+Accept: application/json

@@ -1,4 +1,4 @@
-package org.polytech.spring.films;
+package org.polytech.spring.films.exception;
 
 public class CommentaireNotFoundException extends RuntimeException {
     public CommentaireNotFoundException(long id) {

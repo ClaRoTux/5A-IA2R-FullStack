@@ -1,4 +1,4 @@
-package org.polytech.spring.films;
+package org.polytech.spring.films.exception;
 
 public class InvalidCommentException extends RuntimeException {
     public InvalidCommentException(String message) {

@@ -1,4 +1,4 @@
-package org.polytech.spring.films;
+package org.polytech.spring.films.model;
 
 public enum Genre {
     ACTION,
