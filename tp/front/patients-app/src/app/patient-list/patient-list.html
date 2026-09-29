@@ -1,0 +1,19 @@
+<ul>
+    @for (p of patients(); track p.id) {
+    <li (click)="selection.set(p)" [class.senior]="estSenior(p)" [class.selectionne]="selection()?.id === p.id">
+        {{ p.prenom }} {{ p.nom }}
+    </li>
+    } @empty {
+    <li>Aucun patient.</li>
+    }
+</ul>
+
+@if (selection(); as p) {
+<div class="detail">
+    <h3>{{ p.prenom }} {{ p.nom }}</h3>
+    <p>Email : {{ p.email }}</p>
+    <p>Date de naissance : {{ p.dateNaissance | date:'dd/MM/yyyy' }}</p>
+</div>
+} @else {
+<p>Cliquez sur un patient pour voir son détail.</p>
+}

@@ -1,0 +1,13 @@
+li {
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.senior {
+    color: darkred;
+}
+
+.selectionne {
+    background-color: blanchedalmond;
+    font-weight: bold;
+}

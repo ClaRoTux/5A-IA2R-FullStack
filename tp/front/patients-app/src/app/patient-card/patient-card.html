@@ -1,0 +1,14 @@
+<div>
+    <h2>{{ patient().prenom }} {{ patient().nom }}</h2>
+    <p>Email : {{ patient().email }}</p>
+    <p>Date de naissance : {{ patient().dateNaissance | date:'dd/MM/yyyy' }}</p>
+</div>
+
+<form #f="ngForm">
+    <input name="nom" [(ngModel)]="nom" required />
+    <button type="button" (click)="nom.set('')" [disabled]="f.invalid">
+        Effacer le nom
+    </button>
+</form>
+
+<p>Nom saisi : {{ nom() }}</p>
