@@ -1,0 +1,17 @@
+<div>
+    <h1>Liste des acteurs</h1>
+
+    @if (erreur()) {
+    <p class="erreur">{{ erreur() }}</p>
+    } @else {
+    <ul>
+        @for (a of acteurs(); track a.id) {
+        <li>
+            <a [routerLink]="['/acteurs', a.id]">{{ a.firstname }} {{a.name}}</a>
+        </li>
+        } @empty {
+        <li>Aucun acteur enregistré.</li>
+        }
+    </ul>
+    }
+</div>

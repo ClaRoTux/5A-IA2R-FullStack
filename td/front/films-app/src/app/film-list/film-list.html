@@ -1,0 +1,19 @@
+<div>
+    <h1>Liste des films</h1>
+    <a routerLink="/films/nouveau">Nouveau film</a>
+
+    @if (erreur()) {
+    <p class="erreur">{{ erreur() }}</p>
+    } @else {
+    <ul>
+        @for (f of films(); track f.id) {
+        <li [class.vieux]="avant2000(f)">
+            <a [routerLink]="['/films', f.id]">{{ f.titre }}</a>
+            <span>{{ f.dateSortie | date: 'dd/MM/yyyy' }}</span>
+        </li>
+        } @empty {
+        <li>Aucun film enregistré.</li>
+        }
+    </ul>
+    }
+</div>

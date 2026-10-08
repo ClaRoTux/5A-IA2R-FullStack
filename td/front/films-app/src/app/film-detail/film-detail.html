@@ -1,0 +1,35 @@
+<a routerLink="/films">← Retour à la liste</a>
+
+@if (film.error()) {
+<p class="erreur">{{ film.error()?.message }}</p>
+} @else if (film.isLoading()) {
+<p>Chargement…</p>
+} @else if (film.value(); as f) {
+<h1>{{ f.titre }}</h1>
+<p>Réalisé par {{ f.realisateur }}</p>
+<p>Sorti le {{ f.dateSortie | date: 'dd/MM/yyyy' }}</p>
+<p>Genre : {{ f.genre }}</p>
+
+<h2>Acteurs</h2>
+<ul>
+    @for (r of f.acteurs; track r.acteurId) {
+    <li>
+        <a [routerLink]="['/acteurs', r.acteurId]">{{ r.firstname }} {{ r.name }}</a>
+        @if (r.personnage) {
+        <span> — {{ r.personnage }}</span>
+        }
+    </li>
+    } @empty {
+    <li>Aucun acteur associé.</li>
+    }
+</ul>
+
+<div class="actions">
+    <a [routerLink]="['/films', filmId(), 'modifier']">Modifier</a>
+    <button type="button" (click)="supprimer()">Supprimer</button>
+</div>
+
+@if (erreurAction()) {
+<p class="erreur">{{ erreurAction() }}</p>
+}
+}
