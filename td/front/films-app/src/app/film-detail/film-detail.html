@@ -2,7 +2,7 @@
 
 @if (film.error()) {
 <p class="erreur">{{ film.error()?.message }}</p>
-} @else if (film.isLoading()) {
+} @else if (film.isLoading() && !film.hasValue()) {
 <p>Chargement…</p>
 } @else if (film.value(); as f) {
 <h1>{{ f.titre }}</h1>
@@ -15,14 +15,37 @@
     @for (r of f.acteurs; track r.acteurId) {
     <li>
         <a [routerLink]="['/acteurs', r.acteurId]">{{ r.firstname }} {{ r.name }}</a>
+        @if (roleEnEdition() === r.acteurId) {
+        <input [(ngModel)]="nouveauPersonnage" placeholder="Personnage" />
+        <button type="button" (click)="enregistrerRole(r.acteurId)">Enregistrer</button>
+        <button type="button" (click)="roleEnEdition.set(null)">Annuler</button>
+        } @else {
         @if (r.personnage) {
         <span> — {{ r.personnage }}</span>
+        }
+        <button type="button" (click)="editerRole(r)">Modifier le rôle</button>
+        <button type="button" (click)="dissocier(r.acteurId)">Dissocier</button>
         }
     </li>
     } @empty {
     <li>Aucun acteur associé.</li>
     }
 </ul>
+
+@if (acteurs.error()) {
+<p class="erreur">{{ acteurs.error()?.message }}</p>
+} @else {
+<div class="associer">
+    <select [(ngModel)]="acteurSelectionne">
+        <option [ngValue]="null">— Choisir un acteur —</option>
+        @for (a of disponibles(); track a.id) {
+        <option [ngValue]="a.id">{{ a.firstname }} {{ a.name }}</option>
+        }
+    </select>
+    <input [(ngModel)]="personnage" placeholder="Personnage (facultatif)" />
+    <button type="button" (click)="associer()" [disabled]="!acteurSelectionne()">Associer</button>
+</div>
+}
 
 <div class="actions">
     <a [routerLink]="['/films', filmId(), 'modifier']">Modifier</a>

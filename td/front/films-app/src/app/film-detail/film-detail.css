@@ -1,6 +1,11 @@
-.actions {
+.actions,
+.associer {
     display: flex;
     gap: 1rem;
     align-items: center;
     margin-top: 1rem;
+}
+
+li button {
+    margin-left: 0.5rem;
 }

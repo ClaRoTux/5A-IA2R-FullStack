@@ -1,0 +1,27 @@
+<h1>{{ edition() ? "Modifier l'acteur" : 'Nouvel acteur' }}</h1>
+
+@if (acteur.error()) {
+<p class="erreur">{{ acteur.error()?.message }}</p>
+} @else if (acteur.isLoading()) {
+<p>Chargement…</p>
+} @else {
+<form #form="ngForm" (ngSubmit)="enregistrer()">
+    <label>
+        Prénom
+        <input name="firstname" [(ngModel)]="firstname" required />
+    </label>
+    <label>
+        Nom
+        <input name="name" [(ngModel)]="name" required />
+    </label>
+
+    <div class="actions">
+        <button type="submit" [disabled]="form.invalid">Enregistrer</button>
+        <a [routerLink]="edition() ? ['/acteurs', acteurId()] : ['/acteurs']">Annuler</a>
+    </div>
+</form>
+}
+
+@if (erreur()) {
+<p class="erreur">{{ erreur() }}</p>
+}
