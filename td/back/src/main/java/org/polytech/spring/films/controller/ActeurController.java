@@ -7,6 +7,7 @@ import org.polytech.spring.films.dto.ActeurCreationDto;
 import org.polytech.spring.films.dto.ActeurDetailDto;
 import org.polytech.spring.films.dto.ActeurDto;
 import org.polytech.spring.films.dto.FilmDto;
+import org.polytech.spring.films.dto.PageDto;
 import org.polytech.spring.films.service.ActeurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,8 +31,11 @@ public class ActeurController {
     }
 
     @GetMapping
-    public List<ActeurDto> getActeurs() {
-        return acteurService.getActeurs();
+    public PageDto<ActeurDto> getActeurs(@RequestParam(name = "recherche", required = false) String recherche,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size,
+            @RequestParam(name = "sort", defaultValue = "id") String sort) {
+        return acteurService.getActeurs(recherche, page, size, sort);
     }
 
     @GetMapping("/{id}")

@@ -2,6 +2,7 @@ package org.polytech.spring.films.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.polytech.spring.films.dto.ActeurCreationDto;
 import org.polytech.spring.films.dto.ActeurDetailDto;
@@ -9,17 +10,22 @@ import org.polytech.spring.films.dto.ActeurDto;
 import org.polytech.spring.films.dto.ActeurMapper;
 import org.polytech.spring.films.dto.FilmDto;
 import org.polytech.spring.films.dto.FilmMapper;
+import org.polytech.spring.films.dto.PageDto;
 import org.polytech.spring.films.exception.ActeurNotFoundException;
 import org.polytech.spring.films.exception.InvalidActeurException;
 import org.polytech.spring.films.model.Acteur;
 import org.polytech.spring.films.repository.ActeurRepository;
 import org.polytech.spring.films.repository.FilmRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ActeurService {
+    private static final Set<String> tris = Set.of("id", "firstname", "name");
+
     private final ActeurRepository acteurRepository;
     private final FilmRepository filmRepository;
 
@@ -29,8 +35,29 @@ public class ActeurService {
     }
 
     @Transactional(readOnly = true)
-    public List<ActeurDto> getActeurs() {
-        return acteurRepository.findAll(Sort.by("id")).stream().map(ActeurMapper::toDto).toList();
+    public PageDto<ActeurDto> getActeurs(String recherche, int page, int size, String sort) {
+        if (page < 0 || size < 1 || size > 100) {
+            throw new InvalidActeurException("Invalid pagination parameters");
+        }
+        Pageable pageable = PageRequest.of(page, size, parseSort(sort));
+        String motif = (recherche == null || recherche.isBlank())
+                ? "%"
+                : "%" + recherche.toLowerCase() + "%";
+        return PageDto.of(acteurRepository.search(motif, pageable).map(ActeurMapper::toDto));
+    }
+
+    private Sort parseSort(String sort) {
+        String[] parts = sort.split(",");
+        String champ = parts[0].trim();
+        if (!tris.contains(champ) || parts.length > 2) {
+            throw new InvalidActeurException("Invalid sort field: " + sort);
+        }
+        Sort.Direction dir = Sort.Direction.ASC;
+        if (parts.length == 2) {
+            dir = Sort.Direction.fromOptionalString(parts[1].trim())
+                    .orElseThrow(() -> new InvalidActeurException("Invalid sort direction: " + parts[1]));
+        }
+        return Sort.by(dir, champ);
     }
 
     @Transactional(readOnly = true)

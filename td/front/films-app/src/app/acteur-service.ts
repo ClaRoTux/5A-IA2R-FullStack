@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Acteur, ActeurCreation } from './acteur.model';
 import { Film } from './film.model';
+import { Page } from './page.model';
 
 @Service()
 export class ActeurService {
@@ -10,7 +11,10 @@ export class ActeurService {
     private url = '/api/acteurs';
 
     getAll(): Observable<Acteur[]> {
-        return this.http.get<Acteur[]>(this.url).pipe(catchError((e) => this.gererErreur(e)));
+        return this.http.get<Page<Acteur>>(this.url, { params: { size: 100 } }).pipe(
+            map((p) => p.content),
+            catchError((e) => this.gererErreur(e)),
+        );
     }
 
     getById(id: number): Observable<Acteur> {

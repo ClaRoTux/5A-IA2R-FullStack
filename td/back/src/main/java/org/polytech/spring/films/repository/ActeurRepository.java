@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.polytech.spring.films.model.Acteur;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -26,4 +28,10 @@ public interface ActeurRepository extends JpaRepository<Acteur, Long> {
                         where a.id = :id
                         """)
         Optional<Acteur> findByIdWithFilms(@Param("id") Long id);
+
+        @Query("""
+                        select a from Acteur a
+                        where lower(a.name) like :motif or lower(a.firstname) like :motif
+                        """)
+        Page<Acteur> search(@Param("motif") String motif, Pageable pageable);
 }
