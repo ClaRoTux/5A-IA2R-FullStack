@@ -2,11 +2,8 @@
 <a routerLink="/acteurs/nouveau">Nouvel acteur</a>
 
 <div class="filtres">
-    <input
-        [ngModel]="recherche()"
-        (ngModelChange)="changerRecherche($event)"
-        placeholder="Rechercher un nom ou un prénom"
-    />
+    <input [ngModel]="recherche()" (ngModelChange)="changerRecherche($event)"
+        placeholder="Rechercher un nom ou un prénom" />
     <select [ngModel]="tri()" (ngModelChange)="changerTri($event)">
         <option value="name,asc">Nom A → Z</option>
         <option value="name,desc">Nom Z → A</option>

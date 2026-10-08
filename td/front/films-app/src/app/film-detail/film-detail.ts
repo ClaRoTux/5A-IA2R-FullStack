@@ -6,9 +6,10 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { FilmService } from '../film-service';
 import { ActeurService } from '../acteur-service';
 import { Role, RoleCreation } from '../role.model';
+import { FilmCommentaires } from '../film-commentaires/film-commentaires';
 
 @Component({
-  imports: [RouterLink, DatePipe, FormsModule],
+  imports: [RouterLink, DatePipe, FormsModule, FilmCommentaires],
   selector: 'app-film-detail',
   styleUrl: './film-detail.css',
   templateUrl: './film-detail.html',

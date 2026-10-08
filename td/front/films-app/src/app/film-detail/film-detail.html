@@ -55,4 +55,6 @@
 @if (erreurAction()) {
 <p class="erreur">{{ erreurAction() }}</p>
 }
+
+<app-film-commentaires [filmId]="filmId()" />
 }

@@ -1,0 +1,31 @@
+<h2>Commentaires</h2>
+
+@if (commentaires.error()) {
+<p class="erreur">{{ commentaires.error()?.message }}</p>
+} @else if (commentaires.isLoading() && !commentaires.hasValue()) {
+<p>Chargement…</p>
+} @else {
+<ul>
+    @for (c of commentaires.value(); track c.id) {
+    <li class="commentaire">
+        <div>
+            <b>{{ c.auteur }}</b>, le {{ c.date | date: 'dd/MM/yyyy' }}
+            <button type="button" (click)="supprimer(c)">Supprimer</button>
+        </div>
+        <p>{{ c.message }}</p>
+    </li>
+    } @empty {
+    <li>Aucun commentaire pour ce film.</li>
+    }
+</ul>
+
+<form #form="ngForm" (ngSubmit)="ajouter(form)">
+    <input name="auteur" [(ngModel)]="auteur" placeholder="Votre nom" required />
+    <textarea name="message" [(ngModel)]="message" placeholder="Votre commentaire" required></textarea>
+    <button type="submit" [disabled]="form.invalid">Publier</button>
+</form>
+}
+
+@if (erreur()) {
+<p class="erreur">{{ erreur() }}</p>
+}

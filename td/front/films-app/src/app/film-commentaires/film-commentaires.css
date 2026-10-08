@@ -1,0 +1,29 @@
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.commentaire {
+    border-left: 3px solid #ccc;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.commentaire p {
+    margin: 0.25rem 0 0;
+}
+
+.commentaire button {
+    margin-left: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 30rem;
+}
+
+textarea {
+    min-height: 4rem;
+}
