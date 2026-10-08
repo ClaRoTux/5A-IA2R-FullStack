@@ -1,18 +1,33 @@
-<div>
-    <h1>Liste des acteurs</h1>
-    <a routerLink="/acteurs/nouveau">Nouvel acteur</a>
+<h1>Liste des acteurs</h1>
+<a routerLink="/acteurs/nouveau">Nouvel acteur</a>
 
-    @if (erreur()) {
-    <p class="erreur">{{ erreur() }}</p>
-    } @else {
-    <ul>
-        @for (a of acteurs(); track a.id) {
-        <li>
-            <a [routerLink]="['/acteurs', a.id]">{{ a.firstname }} {{a.name}}</a>
-        </li>
-        } @empty {
-        <li>Aucun acteur enregistré.</li>
-        }
-    </ul>
-    }
+<div class="filtres">
+    <input
+        [ngModel]="recherche()"
+        (ngModelChange)="changerRecherche($event)"
+        placeholder="Rechercher un nom ou un prénom"
+    />
+    <select [ngModel]="tri()" (ngModelChange)="changerTri($event)">
+        <option value="name,asc">Nom A → Z</option>
+        <option value="name,desc">Nom Z → A</option>
+        <option value="firstname,asc">Prénom A → Z</option>
+        <option value="firstname,desc">Prénom Z → A</option>
+    </select>
 </div>
+
+@if (acteurs.error()) {
+<p class="erreur">{{ acteurs.error()?.message }}</p>
+} @else if (acteurs.isLoading() && !acteurs.hasValue()) {
+<p>Chargement…</p>
+} @else if (acteurs.value(); as p) {
+<ul>
+    @for (a of p.content; track a.id) {
+    <li>
+        <a [routerLink]="['/acteurs', a.id]">{{ a.firstname }} {{ a.name }}</a>
+    </li>
+    } @empty {
+    <li>Aucun acteur trouvé.</li>
+    }
+</ul>
+<app-pagination [page]="p.page" [totalPages]="p.totalPages" (pageChange)="page.set($event)" />
+}

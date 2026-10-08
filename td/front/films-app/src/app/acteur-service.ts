@@ -17,6 +17,16 @@ export class ActeurService {
         );
     }
 
+    getPage(page: number, size: number, sort: string, recherche?: string): Observable<Page<Acteur>> {
+        const params: Record<string, string | number> = { page, size, sort };
+        if (recherche?.trim()) {
+            params['recherche'] = recherche.trim();
+        }
+        return this.http
+            .get<Page<Acteur>>(this.url, { params })
+            .pipe(catchError((e) => this.gererErreur(e)));
+    }
+
     getById(id: number): Observable<Acteur> {
         return this.http.get<Acteur>(`${this.url}/${id}`).pipe(catchError((e) => this.gererErreur(e)));
     }

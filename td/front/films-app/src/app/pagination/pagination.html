@@ -1,0 +1,7 @@
+@if (totalPages() > 1) {
+<nav class="pagination">
+    <button type="button" (click)="precedente()" [disabled]="page() === 0">← Précédent</button>
+    <span>Page {{ page() + 1 }} / {{ totalPages() }}</span>
+    <button type="button" (click)="suivante()" [disabled]="page() >= totalPages() - 1">Suivant →</button>
+</nav>
+}
