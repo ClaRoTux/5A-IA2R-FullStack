@@ -1,1 +1,36 @@
-<p>acteur-detail works!</p>
+<a routerLink="/acteurs">← Retour à la liste</a>
+
+@if (acteur.error()) {
+<p class="erreur">{{ acteur.error()?.message }}</p>
+} @else if (acteur.isLoading()) {
+<p>Chargement…</p>
+} @else if (acteur.value(); as a) {
+<h1>{{ a.firstname }} {{ a.name | uppercase }}</h1>
+
+<h2>Films</h2>
+@if (films.error()) {
+<p class="erreur">{{ films.error()?.message }}</p>
+} @else if (films.isLoading()) {
+<p>Chargement…</p>
+} @else {
+<ul>
+    @for (f of films.value(); track f.id) {
+    <li>
+        <a [routerLink]="['/films', f.id]">{{ f.titre }}</a>
+        <span> ({{ f.dateSortie | date: 'yyyy' }})</span>
+    </li>
+    } @empty {
+    <li>Aucun film pour cet acteur.</li>
+    }
+</ul>
+}
+
+<div class="actions">
+    <a [routerLink]="['/acteurs', acteurId(), 'modifier']">Modifier</a>
+    <button type="button" (click)="supprimer()">Supprimer l'acteur</button>
+</div>
+
+@if (erreurAction()) {
+<p class="erreur">{{ erreurAction() }}</p>
+}
+}

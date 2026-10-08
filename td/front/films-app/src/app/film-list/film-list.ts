@@ -1,31 +1,32 @@
 import { Component, inject, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, of } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { FilmService } from '../film-service';
 import { Film } from '../film.model';
+import { FilmCard } from '../film-card/film-card';
 
 @Component({
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, FilmCard],
   selector: 'app-film-list',
   styleUrl: './film-list.css',
   templateUrl: './film-list.html',
 })
 export class FilmList {
   private service = inject(FilmService);
-  erreur = signal<string | null>(null);
-  films = toSignal(
-    this.service.getAll().pipe(
-      catchError((e: Error) => {
-        this.erreur.set(e.message);
-        return of([]);
-      }),
-    ),
-    { initialValue: [] },
-  );
+  erreurAction = signal<string | null>(null);
 
-  avant2000(f: Film): boolean {
-    return new Date(f.dateSortie).getFullYear() < 2000;
+  films = rxResource({
+    stream: () => this.service.getAll(),
+  });
+
+  onSupprimer(f: Film) {
+    if (!confirm(`Supprimer « ${f.titre} » ?`)) {
+      return;
+    }
+    this.erreurAction.set(null);
+    this.service.supprimer(f.id).subscribe({
+      next: () => this.films.reload(),
+      error: (e: Error) => this.erreurAction.set(e.message),
+    });
   }
 }

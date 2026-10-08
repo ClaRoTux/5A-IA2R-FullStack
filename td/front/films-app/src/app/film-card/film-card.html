@@ -1,1 +1,6 @@
-<p>film-card works!</p>
+<article class="carte" [ngClass]="{ vieux: avant2000() }">
+    <a [routerLink]="['/films', film().id]">{{ film().titre }}</a>
+    <span>{{ film().realisateur }}</span>
+    <span>{{ film().dateSortie | date: 'dd/MM/yyyy' }}</span>
+    <button type="button" (click)="onSupprimer()">Supprimer</button>
+</article>
