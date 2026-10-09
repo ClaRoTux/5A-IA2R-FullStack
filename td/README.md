@@ -85,3 +85,9 @@ films/app/src/app/
         not-found/
         pagination/
 ```
+
+## Explication
+
+`rxResource()` : Permet de faire des appels à HttpClient() et permets également de mettre à jour automatiquement les signaux passés en paramètres.
+
+`effect()`: sert à exécuter du code automatiquement dès qu'un ou plusieurs signaux lus à l'intérieur de sa fonction changent de valeur.
