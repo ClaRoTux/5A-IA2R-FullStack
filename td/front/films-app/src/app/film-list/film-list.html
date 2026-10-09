@@ -1,18 +1,41 @@
 <h1>Liste des films</h1>
 <a routerLink="/films/nouveau">Nouveau film</a>
 
+<div class="filtres">
+    <input
+        [ngModel]="realisateur()"
+        (ngModelChange)="changerRealisateur($event)"
+        placeholder="Rechercher un réalisateur"
+    />
+    <select [ngModel]="genre()" (ngModelChange)="changerGenre($event)">
+        <option [ngValue]="null">Tous les genres</option>
+        @for (g of genres; track g) {
+        <option [ngValue]="g">{{ g }}</option>
+        }
+    </select>
+    <select [ngModel]="tri()" (ngModelChange)="changerTri($event)">
+        <option value="titre,asc">Titre A → Z</option>
+        <option value="titre,desc">Titre Z → A</option>
+        <option value="dateSortie,desc">Plus récents</option>
+        <option value="dateSortie,asc">Plus anciens</option>
+        <option value="realisateur,asc">Réalisateur A → Z</option>
+    </select>
+</div>
+
 @if (erreurAction()) {
 <p class="erreur">{{ erreurAction() }}</p>
 }
 
 @if (films.error()) {
 <p class="erreur">{{ films.error()?.message }}</p>
-} @else if (films.isLoading()) {
+} @else if (films.isLoading() && !films.hasValue()) {
 <p>Chargement…</p>
-} @else {
-@for (f of films.value(); track f.id) {
+} @else if (films.value(); as p) {
+<p>{{ p.totalElements }} film(s)</p>
+@for (f of p.content; track f.id) {
 <app-film-card [film]="f" (supprimer)="onSupprimer($event)" />
 } @empty {
-<p>Aucun film enregistré.</p>
+<p>Aucun film ne correspond à ces critères.</p>
 }
+<app-pagination [page]="p.page" [totalPages]="p.totalPages" (pageChange)="page.set($event)" />
 }

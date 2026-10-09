@@ -1,0 +1,11 @@
+.filtres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.filtres input {
+    flex: 1;
+    max-width: 20rem;
+}

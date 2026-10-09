@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Film, FilmCreation } from './film.model';
+import { Genre } from './genre.model';
 import { Page } from './page.model';
 import { RoleCreation } from './role.model';
 
@@ -15,6 +16,25 @@ export class FilmService {
             map((p) => p.content),
             catchError((e) => this.gererErreur(e)),
         );
+    }
+
+    getPage(
+        page: number,
+        size: number,
+        sort: string,
+        realisateur?: string,
+        genre?: Genre | null,
+    ): Observable<Page<Film>> {
+        const params: Record<string, string | number> = { page, size, sort };
+        if (realisateur?.trim()) {
+            params['realisateur'] = realisateur.trim();
+        }
+        if (genre) {
+            params['genre'] = genre;
+        }
+        return this.http
+            .get<Page<Film>>(this.url, { params })
+            .pipe(catchError((e) => this.gererErreur(e)));
     }
 
     getById(id: number): Observable<Film> {
