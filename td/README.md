@@ -46,3 +46,42 @@ Afin de les connecter, il faut dans le cors du back dans `td/back/src/main/resso
 |   PUT   | /acteurs/{id}                  | Met à jour un acteur                                                 |
 |  DELETE | /acteurs/{id}                  | Supprime un acteurs                                                  |
 |   GET   | /acteurs/{id}/films            | L'ensemble des films joué par l'acteur                               |
+
+## Structure des dossiers
+
+### Back
+```
+src/main/
+    java/org/polytech/spring/films/
+        config/
+        controller/
+        dto/
+        exception/
+        model/
+        repository/
+        service/
+    ressources/
+```
+
+### Front
+
+```
+films/app/src/app/
+    core/
+    features/
+        acteurs/
+            acteur-detail/
+            acteur-form/
+            acteur-list/
+        films/
+            film-card/
+            film-commentaires/
+            film-detail/
+            film-form/
+            frilm-list/
+    models/
+    services/
+    shared/
+        not-found/
+        pagination/
+```

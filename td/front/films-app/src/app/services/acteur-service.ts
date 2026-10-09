@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Acteur, ActeurCreation } from './acteur.model';
-import { Film } from './film.model';
-import { Page } from './page.model';
+import { Acteur, ActeurCreation } from '../models/acteur.model';
+import { Film } from '../models/film.model';
+import { Page } from '../models/page.model';
 
 @Service()
 export class ActeurService {

@@ -2,8 +2,8 @@ import { Component, inject, input, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { CommentaireService } from '../commentaire-service';
-import { Commentaire } from '../commentaire.model';
+import { CommentaireService } from '../../../services/commentaire-service';
+import { Commentaire } from '../../../models/commentaire.model';
 
 @Component({
   imports: [DatePipe, FormsModule],

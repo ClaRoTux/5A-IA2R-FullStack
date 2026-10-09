@@ -3,9 +3,9 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { FilmService } from '../film-service';
-import { ActeurService } from '../acteur-service';
-import { Role, RoleCreation } from '../role.model';
+import { FilmService } from '../../../services/film-service';
+import { ActeurService } from '../../../services/acteur-service';
+import { Role, RoleCreation } from '../../../models/role.model';
 import { FilmCommentaires } from '../film-commentaires/film-commentaires';
 
 @Component({

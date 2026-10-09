@@ -2,9 +2,9 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { FilmService } from '../film-service';
-import { FilmCreation } from '../film.model';
-import { Genre, GENRES } from '../genre.model';
+import { FilmService } from '../../../services/film-service';
+import { FilmCreation } from '../../../models/film.model';
+import { Genre, GENRES } from '../../../models/genre.model';
 
 @Component({
   imports: [FormsModule, RouterLink],

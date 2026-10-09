@@ -1,7 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Film } from '../film.model';
+import { Film } from '../../../models/film.model';
 
 @Component({
   imports: [RouterLink, DatePipe, NgClass],

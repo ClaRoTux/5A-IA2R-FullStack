@@ -2,8 +2,8 @@ import { Component, computed, effect, inject, input, signal } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ActeurService } from '../acteur-service';
-import { ActeurCreation } from '../acteur.model';
+import { ActeurService } from '../../../services/acteur-service';
+import { ActeurCreation } from '../../../models/acteur.model';
 
 @Component({
   imports: [FormsModule, RouterLink],

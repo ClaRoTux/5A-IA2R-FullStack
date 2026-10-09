@@ -2,11 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { FilmService } from '../film-service';
-import { Film } from '../film.model';
-import { Genre, GENRES } from '../genre.model';
+import { FilmService } from '../../../services/film-service';
+import { Film } from '../../../models/film.model';
+import { Genre, GENRES } from '../../../models/genre.model';
 import { FilmCard } from '../film-card/film-card';
-import { Pagination } from '../pagination/pagination';
+import { Pagination } from '../../../shared/pagination/pagination';
 
 @Component({
   imports: [RouterLink, FormsModule, FilmCard, Pagination],

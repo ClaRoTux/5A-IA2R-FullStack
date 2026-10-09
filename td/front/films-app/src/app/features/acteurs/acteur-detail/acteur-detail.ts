@@ -2,7 +2,7 @@ import { Component, computed, inject, input, signal } from '@angular/core';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ActeurService } from '../acteur-service';
+import { ActeurService } from '../../../services/acteur-service';
 
 @Component({
   imports: [RouterLink, UpperCasePipe, DatePipe],

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { Commentaire, CommentaireCreation } from './commentaire.model';
+import { Commentaire, CommentaireCreation } from '../models/commentaire.model';
 
 @Service()
 export class CommentaireService {

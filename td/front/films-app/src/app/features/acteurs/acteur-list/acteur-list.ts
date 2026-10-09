@@ -2,8 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ActeurService } from '../acteur-service';
-import { Pagination } from '../pagination/pagination';
+import { ActeurService } from '../../../services/acteur-service';
+import { Pagination } from '../../../shared/pagination/pagination';
 
 @Component({
   imports: [RouterLink, FormsModule, Pagination],

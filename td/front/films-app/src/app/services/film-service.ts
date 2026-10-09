@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Film, FilmCreation } from './film.model';
-import { Genre } from './genre.model';
-import { Page } from './page.model';
-import { RoleCreation } from './role.model';
+import { Film, FilmCreation } from '../models/film.model';
+import { Genre } from '../models/genre.model';
+import { Page } from '../models/page.model';
+import { RoleCreation } from '../models/role.model';
 
 @Service()
 export class FilmService {
